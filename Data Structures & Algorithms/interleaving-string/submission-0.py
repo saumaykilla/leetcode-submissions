@@ -1,0 +1,24 @@
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        if len(s1) + len(s2) != len(s3):
+            return False
+        memo ={}
+
+        def solve(i,j):
+            if i==len(s1) and j==len(s2):
+                return True
+            
+            if (i,j) in memo:
+                return memo[(i,j)]
+            
+            k= i+j
+            ans = False
+            if i<len(s1) and s1[i] == s3[k]:
+                ans = solve(i+1,j)
+            if not ans and j<len(s2) and s2[j]==s3[k]:
+                ans = solve(i,j+1)
+            memo[(i,j)]= ans
+
+            return memo[(i,j)]
+
+        return solve(0,0)
